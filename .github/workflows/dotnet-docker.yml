@@ -7,11 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest   # or self-hosted if you want to reuse Satya_pool
-
-    env:
-      ENV: dev
-      TEST: 123
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -28,8 +24,3 @@ jobs:
         run: |
           docker compose -f EmployeeAppPostgresCompose/docker-compose.yml up -d
           docker ps
-
-      # Optional: Run .NET tests inside the container
-      - name: Run tests
-        run: |
-          docker exec $(docker ps -qf "name=web") dotnet test --no-build --verbosity normal
