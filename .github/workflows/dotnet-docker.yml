@@ -22,11 +22,11 @@ jobs:
 
       - name: Build images using Docker Compose
         run: |
-          docker-compose -f EmployeeAppPostgresCompose/docker-compose.yml build
+          docker compose -f EmployeeAppPostgresCompose/docker-compose.yml build
 
       - name: Run containers
         run: |
-          docker-compose -f EmployeeAppPostgresCompose/docker-compose.yml up -d
+          docker compose -f EmployeeAppPostgresCompose/docker-compose.yml up -d
           docker ps
 
       # Optional: Run .NET tests inside the container
