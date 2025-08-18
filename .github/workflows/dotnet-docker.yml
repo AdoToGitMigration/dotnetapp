@@ -1,4 +1,4 @@
-name: Build and Run .NET5 App with Postgres
+name: Build and Run DotNET5 App with Postgres
 
 on:
   push:
