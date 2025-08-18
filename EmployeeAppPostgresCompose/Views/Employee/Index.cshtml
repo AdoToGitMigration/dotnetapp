@@ -1,0 +1,38 @@
+@model IEnumerable<EmployeeApp.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employee List";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<!-- A simple table listing all employees with an inline form to update
+     their salary. Each row contains the current salary and an input
+     field pre‑populated with the same value for convenience. -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Current Salary</th>
+            <th>New Salary</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.Name</td>
+                <td>@employee.Salary</td>
+                <td>
+                    <form action="/Employee/UpdateSalary" method="post" class="form-inline">
+                        <input type="hidden" name="id" value="@employee.Id" />
+                        <input type="number" step="0.01" name="salary" value="@employee.Salary" class="form-control" />
+                        <button type="submit" class="btn btn-primary ml-2">Update</button>
+                    </form>
+                </td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>

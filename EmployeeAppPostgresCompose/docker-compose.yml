@@ -1,0 +1,37 @@
+version: "3.8"
+
+# This compose file defines two services:
+# 1. db  - a PostgreSQL container for storing employee data.
+# 2. web - the ASP.NET 5 application built from the Dockerfile in this folder.
+#
+# When docker-compose is run, it will build the application image and then
+# launch both containers on the same network. The application uses an
+# environment variable to set its connection string to the Postgres service.
+services:
+  db:
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: employee_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      # The connection string is provided via environment variables
+      # with double underscores to map to ConnectionStrings:DefaultConnection
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=employee_db;Username=postgres;Password=postgres
+
+volumes:
+  postgres_data:
+    driver: local
